@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Хорошо · Порядковые номера</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body { background:#f4ece2; color:#191614; font:16px/1.7 Inter, sans-serif; margin:0 }
+  .wrap { max-width:44rem; margin:0 auto; padding:2rem 1.5rem 4rem }
+  h1 { font:500 2rem/1.1 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem }
+  .note { background:#f0f6f2; border-left:3px solid #4a8f6a; padding:1rem 1.25rem; margin:1.5rem 0; font-size:.9rem }
+  ol.demo { list-style:none; padding:0; margin:2rem 0 0; border-top:1px solid rgba(33,33,31,.1) }
+  ol.demo li { display:flex; gap:1.25rem; align-items:baseline; padding:1rem 0; border-bottom:1px solid rgba(33,33,31,.1) }
+
+  /* ✓ ХОРОШО: цифры дисплейного шрифта, приглушённым акцентом */
+  .num {
+    font-family: Cormorant, Georgia, serif;
+    font-weight: 500;
+    font-size: 1.15rem;
+    font-variant-numeric: tabular-nums;  /* колонка не «пляшет» */
+    letter-spacing: -.02em;
+    color: #e08a3c;                      /* акцент, затемнённый до читаемого */
+    line-height: 1;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✓ Как надо</h1>
+
+  <div class="note">
+    <strong>Приём: цифры набираются шрифтом макета</strong>
+    <ol style="margin:.5rem 0 0; padding-left:1.1rem">
+      <li><b>Никакой третьей гарнитуры.</b> Номер — часть той же типографики,
+          что и заголовки, и выглядит намеренно, а не случайно.</li>
+      <li><b><code>tabular-nums</code>.</b> Моноширинные цифры <i>внутри</i>
+          обычного шрифта: колонка номеров стоит ровно, и ради этого не нужно
+          тащить отдельный моноширинный шрифт.</li>
+      <li><b>Крупнее и с цветом.</b> Номер стал ориентиром: по списку из
+          десяти пунктов можно вести взглядом.</li>
+      <li><b>Акцент затемнён до <code>#e08a3c</code>.</b> Исходный
+          <code>#ffac66</code> на кремовом фоне слишком светел для мелкого
+          текста. Для крупных плашек годится он, для строчного текста — тёмный
+          вариант. Это стоит завести в палитре парой.</li>
+    </ol>
+  </div>
+
+  <ol class="demo">
+    <li><span class="num">01</span><span>Что во мне уже хорошо развито?</span></li>
+    <li><span class="num">02</span><span>На что я могу опереться?</span></li>
+    <li><span class="num">03</span><span>Какой опыт прошлого я проскочил слишком быстро?</span></li>
+    <li><span class="num">04</span><span>Какого ресурса не хватает моей жизни?</span></li>
+    <li><span class="num">10</span><span>Двузначные номера не сдвигают текст — это и есть tabular-nums.</span></li>
+  </ol>
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Хорошо · Страница без JS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<!--
+  Скрипт стоит в <head> и выполняется ДО первой отрисовки.
+  Он не показывает контент, а лишь выдаёт разрешение его прятать.
+  Не выполнился — разрешения нет — текст остаётся на месте.
+-->
+<script>
+  (function () {
+    try {
+      if ("IntersectionObserver" in window &&
+          !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("reveal-on");
+      }
+    } catch (e) { /* без анимации, но с видимым контентом */ }
+  })();
+</script>
+
+<style>
+  body { background:#f4ece2; color:#191614; font:16px/1.7 Inter, sans-serif; margin:0 }
+  .wrap { max-width:44rem; margin:0 auto; padding:2rem 1.5rem }
+  h1 { font:500 2rem/1.1 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem }
+  .note { background:#f0f6f2; border-left:3px solid #4a8f6a; padding:1rem 1.25rem; margin:1.5rem 0; font-size:.9rem }
+  .demo { border:1px dashed rgba(33,33,31,.25); border-radius:14px; padding:1.5rem; min-height:150px; margin-top:1rem }
+
+  /* ✓ ХОРОШО: по умолчанию контент виден.
+     Прятать разрешено только внутри html.reveal-on. */
+  html.reveal-on .reveal {
+    transition: opacity .68s cubic-bezier(.22,1,.36,1),
+                transform .68s cubic-bezier(.22,1,.36,1),
+                filter .68s cubic-bezier(.22,1,.36,1);
+  }
+  html.reveal-on .reveal:not(.is-visible) {
+    opacity:0; transform:translateY(26px); filter:blur(7px);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✓ Как надо</h1>
+
+  <div class="note">
+    <strong>Приём: прогрессивное улучшение</strong><br>
+    Порядок рассуждения переворачивается. Не «прячем и надеемся показать»,
+    а «показано всегда, прятать — только с доказанной возможностью вернуть».
+    <br><br>
+    В этом файле наблюдатель <b>намеренно не запущен</b> — ровно та же авария,
+    что в парном примере. Но текст ниже виден.
+    <br><br>
+    Дополнительный выигрыш: тот же класс снимает анимацию у тех, кто включил
+    в системе «уменьшить движение», — одной проверкой закрываются два случая.
+  </div>
+
+  <p><b>Область контента:</b></p>
+  <div class="demo">
+    <div class="reveal">
+      <h2 style="font:500 1.5rem Cormorant,serif; margin:0 0 .5rem">Заголовок, который виден всегда</h2>
+      <p>Скрипт появления не запущен, но текст на месте. Анимация — приятное
+         дополнение, а не условие того, что страницу вообще можно прочитать.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

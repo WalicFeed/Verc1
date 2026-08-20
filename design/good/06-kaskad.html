@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Хорошо · Каскадное появление</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body { background:#f4ece2; color:#191614; font:16px/1.7 Inter, sans-serif; margin:0 }
+  .wrap { max-width:44rem; margin:0 auto; padding:2rem 1.5rem 4rem }
+  h1 { font:500 2rem/1.1 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem }
+  .note { background:#f0f6f2; border-left:3px solid #4a8f6a; padding:1rem 1.25rem; margin:1.5rem 0; font-size:.9rem }
+  button { background:#0a0909; color:#faf7f0; border:0; border-radius:999px; padding:.7rem 1.4rem;
+           font:500 .875rem Inter, sans-serif; cursor:pointer }
+  ul { list-style:none; padding:0; margin:1.5rem 0 0; border-top:1px solid rgba(33,33,31,.1) }
+  li { padding:.9rem 0; border-bottom:1px solid rgba(33,33,31,.1); font-size:.95rem }
+
+  /* ✓ ХОРОШО: шаг затухает — весь список укладывается в 0,3 с */
+  .list li {
+    transition: opacity .55s cubic-bezier(.22,1,.36,1),
+                transform .55s cubic-bezier(.22,1,.36,1),
+                filter .55s cubic-bezier(.22,1,.36,1);
+  }
+  .list:not(.on) li { opacity:0; transform:translateY(14px); filter:blur(5px) }
+
+  .list li:nth-child(1){transition-delay:0ms}    .list li:nth-child(2){transition-delay:50ms}
+  .list li:nth-child(3){transition-delay:100ms}  .list li:nth-child(4){transition-delay:150ms}
+  .list li:nth-child(5){transition-delay:195ms}  .list li:nth-child(6){transition-delay:235ms}
+  .list li:nth-child(7){transition-delay:270ms}  .list li:nth-child(n+8){transition-delay:300ms}
+
+  @media (prefers-reduced-motion: reduce) {
+    .list:not(.on) li { opacity:1; transform:none; filter:none; transition:none }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✓ Как надо</h1>
+  <div class="note">
+    <strong>Приём: затухающий шаг и потолок задержки</strong>
+    <ol style="margin:.5rem 0 0; padding-left:1.1rem">
+      <li><b>Шаг сокращается:</b> 50 → 50 → 50 → 45 → 40 → 35 мс, а с восьмого
+          пункта задержка перестаёт расти вовсе.</li>
+      <li><b>Весь список укладывается в 0,3 с</b> вместо 1,65 — и это работает
+          при любой длине списка, хоть на пятидесяти пунктах.</li>
+      <li><b>Направление считывается.</b> Каскад по-прежнему показывает,
+          что пункты связаны и читаются сверху вниз, — ради этого он и нужен.</li>
+      <li><b>Амплитуда меньше, чем у секции</b> (14px против 26px): вложенный
+          элемент не должен двигаться сильнее, чем контейнер.</li>
+    </ol>
+    Нажмите кнопку и сравните ощущение с парным примером.
+  </div>
+
+  <button onclick="document.querySelector('.list').classList.toggle('on')">Проиграть заново</button>
+
+  <ul class="list">
+    <li>Пункт 1 — сразу</li><li>Пункт 2 — 50 мс</li>
+    <li>Пункт 3 — 100 мс</li><li>Пункт 4 — 150 мс</li>
+    <li>Пункт 5 — 195 мс</li><li>Пункт 6 — 235 мс</li>
+    <li>Пункт 7 — 270 мс</li><li>Пункт 8 — 300 мс</li>
+    <li>Пункт 9 — 300 мс</li><li>Пункт 10 — 300 мс</li>
+    <li>Пункт 11 — 300 мс</li><li>Пункт 12 — 300 мс ← потолок, ждать нечего</li>
+  </ul>
+</div>
+</body>
+</html>

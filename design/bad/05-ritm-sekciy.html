@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Плохо · Ритм длинной страницы</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body { background:#f4ece2; color:#191614; font:16px/1.7 Inter, sans-serif; margin:0 }
+  .wrap { max-width:52rem; margin:0 auto; padding:0 1.5rem }
+  h1 { font:500 2rem/1.1 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem; padding-top:2rem }
+  .note { background:#fff3f0; border-left:3px solid #d4553e; padding:1rem 1.25rem; margin:1.5rem 0; font-size:.9rem }
+  .eyebrow { font-size:.7rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#a59a8f }
+  .h2 { font:500 2rem/1.05 Cormorant, serif; letter-spacing:-.04em; margin:.75rem 0 .75rem }
+  section { padding:3.5rem 0; border-bottom:1px solid rgba(33,33,31,.08) }
+  .grid { display:grid; gap:1px; background:rgba(33,33,31,.08); border:1px solid rgba(33,33,31,.08);
+          border-radius:14px; overflow:hidden; grid-template-columns:repeat(3,1fr); margin-top:1.25rem }
+  .cell { background:#faf7f0; padding:1.15rem }
+  .cell b { font:500 1.1rem Cormorant, serif; display:block; margin-bottom:.35rem }
+  .cell p { margin:0; font-size:.85rem; color:#191614aa }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✗ Как не надо</h1>
+  <div class="note">
+    <strong>Что не так</strong><br>
+    Восемь секций подряд устроены одинаково: метка → заголовок → сетка карточек.
+    Каждая по отдельности выглядит опрятно, а вместе — сплошная лента без опор.
+    <ol style="margin:.5rem 0 0; padding-left:1.1rem">
+      <li><b>Не за что зацепиться взглядом.</b> При беглой прокрутке —
+          а так читают почти все — страница сливается в один серый поток.</li>
+      <li><b>Нечего вспомнить.</b> Если все блоки равнозначны, ни один
+          не запоминается, и вернуться к нужному месту трудно.</li>
+      <li><b>Плитка вместо иерархии.</b> Карточка — сильная форма, она
+          говорит «это отдельный самостоятельный объект». Когда в карточках
+          всё, форма перестаёт что-либо значить.</li>
+    </ol>
+    Прокрутите вниз — и попробуйте потом вспомнить, где что было.
+  </div>
+
+  <section><p class="eyebrow">Подход</p><p class="h2">Первая секция</p>
+    <div class="grid"><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div></div></section>
+  <section><p class="eyebrow">Главное</p><p class="h2">Вторая секция</p>
+    <div class="grid"><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div></div></section>
+  <section><p class="eyebrow">Программа</p><p class="h2">Третья секция</p>
+    <div class="grid"><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div></div></section>
+  <section><p class="eyebrow">Результат</p><p class="h2">Четвёртая секция</p>
+    <div class="grid"><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div></div></section>
+  <section><p class="eyebrow">Ведущий</p><p class="h2">Пятая секция</p>
+    <div class="grid"><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div></div></section>
+  <section><p class="eyebrow">Контекст</p><p class="h2">Шестая секция</p>
+    <div class="grid"><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div></div></section>
+  <section><p class="eyebrow">Участие</p><p class="h2">Седьмая секция</p>
+    <div class="grid"><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div></div></section>
+</div>
+</body>
+</html>

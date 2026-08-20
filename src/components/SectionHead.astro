@@ -1,0 +1,58 @@
+---
+/**
+ * Шапка секции: метка → заголовок → подпись.
+ *
+ * Приём с arlo.sh: смысловая часть заголовка набирается курсивом
+ * того же шрифта («The <em>company brain.</em>»). Меняется рисунок
+ * строки, а не её цвет, — акцент читается, но не шумит.
+ *
+ * Использование:
+ *   <SectionHead eyebrow="Программа" title="Два дня" em="работы" />
+ */
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** Часть заголовка курсивом. Ставится после title через пробел. */
+  em?: string;
+  /** Курсивная часть с новой строки */
+  emBlock?: boolean;
+  sub?: string;
+  size?: "lg" | "md";
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  em,
+  emBlock = false,
+  sub,
+  size = "lg",
+  class: className = "",
+} = Astro.props;
+---
+
+<div class={className}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+
+  <h2
+    class:list={[
+      "display",
+      size === "lg" ? "display-lg" : "display-md",
+      eyebrow && "mt-5",
+    ]}
+  >
+    {title}
+    {
+      em && (
+        <em class:list={[emBlock && "block"]}>
+          {!emBlock && " "}
+          {em}
+        </em>
+      )
+    }
+  </h2>
+
+  {sub && <p class="sec-sub lede mt-5">{sub}</p>}
+</div>

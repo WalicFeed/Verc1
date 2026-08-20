@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Плохо · Порядковые номера</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body { background:#f4ece2; color:#191614; font:16px/1.7 Inter, sans-serif; margin:0 }
+  .wrap { max-width:44rem; margin:0 auto; padding:2rem 1.5rem 4rem }
+  h1 { font:500 2rem/1.1 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem }
+  .note { background:#fff3f0; border-left:3px solid #d4553e; padding:1rem 1.25rem; margin:1.5rem 0; font-size:.9rem }
+  ol { list-style:none; padding:0; margin:2rem 0 0; border-top:1px solid rgba(33,33,31,.1) }
+  li { display:flex; gap:1.25rem; align-items:baseline; padding:1rem 0; border-bottom:1px solid rgba(33,33,31,.1) }
+
+  /* ✗ ПЛОХО: системный моноширинный шрифт, который в макете не участвует */
+  .num { font-family: ui-monospace, Consolas, "Courier New", monospace;
+         font-size:.75rem; color:#a59a8f }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✗ Как не надо</h1>
+
+  <div class="note">
+    <strong>Что не так</strong><br>
+    Нумерация набрана системным моноширинным шрифтом — Consolas, Courier
+    или чем-то ещё, в зависимости от машины посетителя.
+    <ol style="margin:.5rem 0 0; padding-left:1.1rem; list-style:decimal; border:0">
+      <li style="display:list-item; padding:.15rem 0; border:0"><b>Третья гарнитура без причины.</b>
+          В макете две — Cormorant и Inter. Моноширинный не связан ни с одной.</li>
+      <li style="display:list-item; padding:.15rem 0; border:0"><b>Вид непредсказуем.</b> Системный шрифт
+          выглядит по-разному на разных устройствах — контроля над макетом нет.</li>
+      <li style="display:list-item; padding:.15rem 0; border:0"><b>Техническая интонация.</b> Моноширинный
+          означает «код». На странице о человеческом развитии это звучит чужеродно.</li>
+      <li style="display:list-item; padding:.15rem 0; border:0"><b>Мелко и серо.</b> Номер не помогает
+          ориентироваться в списке — его просто не видно.</li>
+    </ol>
+  </div>
+
+  <ol>
+    <li><span class="num">01</span><span>Что во мне уже хорошо развито?</span></li>
+    <li><span class="num">02</span><span>На что я могу опереться?</span></li>
+    <li><span class="num">03</span><span>Какой опыт прошлого я проскочил слишком быстро?</span></li>
+    <li><span class="num">04</span><span>Какого ресурса не хватает моей жизни?</span></li>
+  </ol>
+</div>
+</body>
+</html>

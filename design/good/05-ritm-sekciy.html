@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Хорошо · Ритм длинной страницы</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;1,500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body { background:#f4ece2; color:#191614; font:16px/1.7 Inter, sans-serif; margin:0 }
+  .wrap { max-width:52rem; margin:0 auto; padding:0 1.5rem }
+  .narrow { max-width:36rem }
+  h1 { font:500 2rem/1.1 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem; padding-top:2rem }
+  .note { background:#f0f6f2; border-left:3px solid #4a8f6a; padding:1rem 1.25rem; margin:1.5rem 0; font-size:.9rem }
+  .eyebrow { font-size:.7rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#a59a8f }
+  .h2 { font:500 2rem/1.05 Cormorant, serif; letter-spacing:-.04em; margin:.75rem 0 .75rem; color:#0a0909 }
+  .h2 em { font-style:italic }
+  section { padding:3.5rem 0; border-bottom:1px solid rgba(33,33,31,.08) }
+  .grid { display:grid; gap:1px; background:rgba(33,33,31,.08); border:1px solid rgba(33,33,31,.08);
+          border-radius:14px; overflow:hidden; grid-template-columns:repeat(3,1fr); margin-top:1.25rem }
+  .cell { background:#faf7f0; padding:1.15rem }
+  .cell b { font:500 1.1rem Cormorant, serif; display:block; margin-bottom:.35rem }
+  .cell p { margin:0; font-size:.85rem; color:#191614aa }
+  .list { margin:1.25rem 0 0; padding:0; list-style:none; border-top:1px solid rgba(33,33,31,.1) }
+  .list li { padding:.85rem 0; border-bottom:1px solid rgba(33,33,31,.1); font-size:.95rem }
+  blockquote { border-left:2px solid #ffac66; padding-left:1.25rem; margin:1.25rem 0 0;
+               font:500 1.6rem/1.15 Cormorant, serif; letter-spacing:-.03em; color:#0a0909 }
+
+  /* ✓ Единственный инверсный разворот на всю страницу */
+  .dark { background:#0a0909; color:rgba(250,247,240,.75); border:0 }
+  .dark .h2 { color:#faf7f0 }
+  .dark .eyebrow { color:rgba(250,247,240,.45) }
+  .dark .stat { font:500 2.5rem/1 Cormorant, serif; color:#ffac66 }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✓ Как надо</h1>
+  <div class="note">
+    <strong>Приём: разные способы подачи + один контрастный разворот</strong>
+    <ol style="margin:.5rem 0 0; padding-left:1.1rem">
+      <li><b>Форма следует за содержанием.</b> Перечень равнозначных пунктов —
+          сетка. Последовательность — список с линейками. Одна мысль —
+          крупная цитата. Человек — портретный разворот.</li>
+      <li><b>Ровно одна инверсная секция.</b> Тёмный блок — самый сильный
+          инструмент ритма. Второй такой же обесценит первый.</li>
+      <li><b>Ширина колонки тоже работает.</b> Узкая колонка под сплошной
+          текст сама по себе меняет темп чтения.</li>
+      <li><b>Тёмный разворот отдан главному.</b> Не случайной секции,
+          а той, к которой нужно вернуться, — про человека.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="wrap"><section><p class="eyebrow">Подход</p><p class="h2">Сетка <em>для равнозначного</em></p>
+  <div class="grid"><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div><div class="cell"><b>Пункт</b><p>Текст</p></div></div></section></div>
+
+<div class="wrap"><section class="narrow"><p class="eyebrow">Почему очно</p><p class="h2">Узкая колонка <em>под сплошной текст</em></p>
+  <p style="color:#191614cc">Когда мысль разворачивается абзацами, сетка мешает.
+  Узкая мера строки замедляет чтение — ровно там, где это нужно.</p></section></div>
+
+<div class="wrap"><section><p class="eyebrow">Вопросы</p><p class="h2">Список <em>для последовательного</em></p>
+  <ul class="list"><li>Что во мне уже хорошо развито?</li><li>На что я могу опереться?</li><li>Какого ресурса не хватает?</li></ul></section></div>
+
+<!-- ← Единственный тёмный разворот -->
+<section class="dark"><div class="wrap" style="padding-top:1rem;padding-bottom:1rem">
+  <p class="eyebrow">Ведущий</p><p class="h2">Анатолий Баляев</p>
+  <div style="display:flex; gap:3rem; margin-top:1.5rem">
+    <div><div class="stat">700+</div><div style="font-size:.85rem; color:rgba(250,247,240,.5)">выпускников</div></div>
+    <div><div class="stat">2025</div><div style="font-size:.85rem; color:rgba(250,247,240,.5)">аккредитация</div></div>
+  </div></div></section>
+
+<div class="wrap"><section><p class="eyebrow">Контекст</p><p class="h2">Цитата <em>для одной мысли</em></p>
+  <blockquote><em>Как развивается человек — и как вместе с ним развивается всё,
+  к чему он прикасается?</em></blockquote></section></div>
+</body>
+</html>

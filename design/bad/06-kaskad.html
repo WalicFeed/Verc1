@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Плохо · Каскадное появление</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body { background:#f4ece2; color:#191614; font:16px/1.7 Inter, sans-serif; margin:0 }
+  .wrap { max-width:44rem; margin:0 auto; padding:2rem 1.5rem 4rem }
+  h1 { font:500 2rem/1.1 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem }
+  .note { background:#fff3f0; border-left:3px solid #d4553e; padding:1rem 1.25rem; margin:1.5rem 0; font-size:.9rem }
+  button { background:#0a0909; color:#faf7f0; border:0; border-radius:999px; padding:.7rem 1.4rem;
+           font:500 .875rem Inter, sans-serif; cursor:pointer }
+  ul { list-style:none; padding:0; margin:1.5rem 0 0; border-top:1px solid rgba(33,33,31,.1) }
+  li { padding:.9rem 0; border-bottom:1px solid rgba(33,33,31,.1); font-size:.95rem }
+
+  /* ✗ ПЛОХО: линейный шаг 150 мс — последний пункт ждёт 1.65 секунды */
+  .list li { transition: opacity .5s ease, transform .5s ease }
+  .list:not(.on) li { opacity:0; transform:translateY(20px) }
+  .list li:nth-child(1){transition-delay:0ms}    .list li:nth-child(2){transition-delay:150ms}
+  .list li:nth-child(3){transition-delay:300ms}  .list li:nth-child(4){transition-delay:450ms}
+  .list li:nth-child(5){transition-delay:600ms}  .list li:nth-child(6){transition-delay:750ms}
+  .list li:nth-child(7){transition-delay:900ms}  .list li:nth-child(8){transition-delay:1050ms}
+  .list li:nth-child(9){transition-delay:1200ms} .list li:nth-child(10){transition-delay:1350ms}
+  .list li:nth-child(11){transition-delay:1500ms} .list li:nth-child(12){transition-delay:1650ms}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✗ Как не надо</h1>
+  <div class="note">
+    <strong>Что не так</strong><br>
+    Задержка растёт линейно: каждый следующий пункт ждёт на 150 мс дольше
+    предыдущего.
+    <ol style="margin:.5rem 0 0; padding-left:1.1rem">
+      <li><b>Хвост списка ждёт 1,65 секунды.</b> Посетитель уже прочитал
+          первые пункты и упёрся в пустоту — контент словно подвис.</li>
+      <li><b>Чем длиннее список, тем хуже.</b> На двадцати пунктах
+          последний появится через три секунды. Прокрутка обгонит анимацию.</li>
+      <li><b>Каскад мешает чтению.</b> Задача каскада — показать, что элементы
+          связаны, а не заставлять ждать.</li>
+    </ol>
+    Нажмите кнопку и досчитайте до последнего пункта.
+  </div>
+
+  <button onclick="document.querySelector('.list').classList.toggle('on')">Проиграть заново</button>
+
+  <ul class="list">
+    <li>Пункт 1 — появляется сразу</li><li>Пункт 2 — 150 мс</li>
+    <li>Пункт 3 — 300 мс</li><li>Пункт 4 — 450 мс</li>
+    <li>Пункт 5 — 600 мс</li><li>Пункт 6 — 750 мс</li>
+    <li>Пункт 7 — 900 мс</li><li>Пункт 8 — 1050 мс</li>
+    <li>Пункт 9 — 1200 мс</li><li>Пункт 10 — 1350 мс</li>
+    <li>Пункт 11 — 1500 мс</li><li>Пункт 12 — 1650 мс ← слишком долго</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Плохо · Акцент в заголовке</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;1,500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  body { background:#f4ece2; color:#191614; font:16px/1.7 Inter, sans-serif; margin:0 }
+  .wrap { max-width:46rem; margin:0 auto; padding:2rem 1.5rem 4rem }
+  h1 { font:500 2rem/1.1 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem }
+  .note { background:#fff3f0; border-left:3px solid #d4553e; padding:1rem 1.25rem; margin:1.5rem 0; font-size:.9rem }
+  .demo { border-top:1px solid rgba(33,33,31,.1); padding:2rem 0 }
+  .h2 { font:500 clamp(1.8rem,4vw,2.8rem)/1.05 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem }
+  .sub { color:#191614aa; font-size:.95rem; max-width:38ch }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✗ Как не надо</h1>
+
+  <div class="note">
+    <strong>Что не так</strong><br>
+    Смысловой акцент подсвечивают цветом. На одном заголовке это выглядит
+    неплохо, но страница состоит не из одного заголовка.
+    <ol style="margin:.5rem 0 0; padding-left:1.1rem">
+      <li><b>Цвет — самый громкий инструмент.</b> Потратив его на украшение,
+          нечем выделить действительно важное: кнопку, цену, срок.</li>
+      <li><b>Акцент теряет значение от повторения.</b> Когда подсвечено
+          в каждом заголовке, это уже не акцент, а узор.</li>
+      <li><b>Контраст падает.</b> Светлый акцент на светлом фоне читается
+          хуже основного текста — выделенное становится менее заметным.</li>
+      <li><b>Жирность вместо цвета не спасает</b> — она ломает ритм строки
+          у шрифта с тонкими штрихами.</li>
+    </ol>
+  </div>
+
+  <div class="demo">
+    <p class="h2">Что останется <span style="color:#ffac66">после встречи</span></p>
+    <p class="sub">Материалы, к которым можно возвращаться.</p>
+  </div>
+  <div class="demo">
+    <p class="h2">Два дня <span style="color:#ffac66">работы</span></p>
+    <p class="sub">Программа встречи.</p>
+  </div>
+  <div class="demo">
+    <p class="h2">Для кого <span style="color:#369faf">эти два дня</span></p>
+    <p class="sub">Третий заголовок, третий цвет — палитра расползается.</p>
+  </div>
+  <div class="demo">
+    <p class="h2">Продолжение разговора <span style="font-weight:700">в Мармарисе</span></p>
+    <p class="sub">Жирность рвёт ровный рисунок строки.</p>
+  </div>
+</div>
+</body>
+</html>

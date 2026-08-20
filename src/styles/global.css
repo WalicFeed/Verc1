@@ -3,7 +3,7 @@
 /* ------------------------------------------------------------------
    Design tokens
    Палитра и шрифты сняты со spiraldynamics.pro,
-   пропорции/формы элементов — с arlo.sh
+   пропорции, формы элементов и механика анимаций — с arlo.sh
    ------------------------------------------------------------------ */
 @theme {
   /* — Цвета (spiraldynamics.pro) — */
@@ -12,6 +12,7 @@
   --color-ink: #191614; /* основной текст */
   --color-ink-strong: #0a0909; /* заголовки */
   --color-accent: #ffac66; /* акцент — персиково-оранжевый */
+  --color-accent-deep: #e08a3c; /* затемнённый акцент для мелкого текста */
   --color-teal: #369faf; /* второй акцент */
   --color-muted: #a59a8f; /* приглушённый текст */
   --color-line: rgba(33, 33, 31, 0.14); /* границы (arlo.sh) */
@@ -21,13 +22,13 @@
   --font-display: "Cormorant", Georgia, "Times New Roman", serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  /* — Ритм секций (arlo.sh: 76px / 132px) — */
-  --spacing-section: 76px;
-  --spacing-closing: 132px;
-
   /* — Скругления (arlo.sh) — */
   --radius-card: 14px;
   --radius-pill: 999px;
+
+  /* — Движение (снято с arlo.sh) — */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-reveal: 0.78s;
 }
 
 /* ------------------------------------------------------------------
@@ -64,7 +65,8 @@
 
 /* ------------------------------------------------------------------
    Типографика
-   Cormorant 500 с плотным трекингом (-0.04em) — как на spiraldynamics
+   Cormorant 500 с плотным трекингом (-0.04em) — как на spiraldynamics.
+   Приём с arlo.sh: часть заголовка курсивом того же шрифта.
    ------------------------------------------------------------------ */
 @layer components {
   .display {
@@ -75,18 +77,24 @@
     line-height: 1;
   }
 
-  /* Крупный герой */
+  /* Смысловой акцент внутри заголовка — курсив того же шрифта.
+     Работает тоньше, чем смена цвета: рисунок строки меняется,
+     а цветовой шум не растёт. */
+  .display em,
+  .display-em {
+    font-style: italic;
+    font-weight: 500;
+  }
+
   .display-xl {
     font-size: clamp(2.75rem, 9vw, 7.25rem);
   }
 
-  /* Заголовок секции */
   .display-lg {
     font-size: clamp(2rem, 5.5vw, 3.75rem);
     line-height: 1.05;
   }
 
-  /* Подзаголовок внутри секции */
   .display-md {
     font-size: clamp(1.5rem, 3.4vw, 2.35rem);
     line-height: 1.12;
@@ -99,10 +107,10 @@
     letter-spacing: -0.025em;
   }
 
-  /* Надзаголовок-метка (Inter, разрядка) */
+  /* Надзаголовок-метка (arlo.sh: 9.5px/600/0.16em) */
   .eyebrow {
     font-family: var(--font-sans);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -113,6 +121,17 @@
     font-size: clamp(1.05rem, 1.6vw, 1.3rem);
     line-height: 1.65;
     color: var(--color-ink);
+  }
+
+  /* Порядковые номера. Вместо системного моноширинного — цифры
+     дисплейного шрифта: они частью макета, а не инородным элементом. */
+  .numeral {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    color: var(--color-accent-deep);
+    line-height: 1;
   }
 
   /* ---------------- Кнопки (форма — arlo.sh) ---------------- */
@@ -130,10 +149,11 @@
     cursor: pointer;
     text-decoration: none;
     transition:
-      transform 0.18s ease,
+      transform 0.18s var(--ease-out),
       background-color 0.18s ease,
       color 0.18s ease,
-      border-color 0.18s ease;
+      border-color 0.18s ease,
+      box-shadow 0.18s ease;
   }
 
   .btn:hover {
@@ -153,6 +173,7 @@
   .btn-primary:hover {
     background-color: #2b2320;
     border-color: #2b2320;
+    box-shadow: 0 10px 30px rgba(10, 9, 9, 0.18);
   }
 
   .btn-ghost {
@@ -172,7 +193,22 @@
     border-radius: var(--radius-card);
   }
 
-  /* Обёртка-контейнер */
+  /* Карточка, которая откликается на курсор. Сдвиг маленький (2px):
+     задача — подтвердить интерактивность, а не устроить аттракцион. */
+  .card-hover {
+    transition:
+      transform 0.25s var(--ease-out),
+      box-shadow 0.25s var(--ease-out),
+      border-color 0.25s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-line);
+    box-shadow: 0 12px 34px rgba(10, 9, 9, 0.07);
+  }
+
+  /* Обёртки-контейнеры */
   .wrap {
     width: 100%;
     max-width: 68rem;
@@ -187,8 +223,45 @@
     padding-inline: 1.5rem;
   }
 
+  /* Подпись под заголовком секции — ограничена по ширине,
+     чтобы строка оставалась читаемой (arlo.sh держит ~380–760px) */
+  .sec-sub {
+    max-width: 44ch;
+  }
+
   .section {
-    padding-block: clamp(3.25rem, 7vw, var(--spacing-section));
+    padding-block: clamp(3.25rem, 7vw, 76px);
+  }
+
+  /* Инверсная секция. Длинная страница из однотонных блоков читается
+     монотонно — один тёмный разворот задаёт ритм и делает раздел
+     о ведущем смысловым центром. */
+  .on-dark {
+    background-color: var(--color-ink-strong);
+    color: rgba(250, 247, 240, 0.75);
+  }
+
+  .on-dark .display,
+  .on-dark .numeral {
+    color: var(--color-cream-lt);
+  }
+
+  .on-dark .eyebrow {
+    color: rgba(250, 247, 240, 0.45);
+  }
+
+  .on-dark .card {
+    background-color: rgba(250, 247, 240, 0.04);
+    border-color: rgba(250, 247, 240, 0.1);
+  }
+
+  .on-dark .rule,
+  .on-dark .border-line-soft {
+    border-color: rgba(250, 247, 240, 0.12) !important;
+  }
+
+  .on-dark .numeral {
+    color: var(--color-accent);
   }
 
   .rule {
@@ -198,42 +271,130 @@
 }
 
 /* ------------------------------------------------------------------
-   Scroll reveal (аналог .hs-reveal с arlo.sh) — на IntersectionObserver
+   Механика появления (снята с arlo.sh)
+
+   Два уровня:
+     .reveal   — секция целиком, наблюдается через IntersectionObserver
+     .stagger  — прямые дети внутри неё догоняют каскадом
+
+   Ключевая деталь, дающая ощущение «выплывания», — не сдвиг,
+   а размытие: filter blur(7px) → 0. Без него движение выглядит
+   механическим.
+
+   Прятать что-либо разрешено только после того, как скрипт повесит
+   .reveal-on на <html>: при выключенном JS страница остаётся видимой.
    ------------------------------------------------------------------ */
 @layer utilities {
   /*
-    Прогрессивное улучшение: по умолчанию контент виден.
-    Прятать элементы разрешено только после того, как скрипт повесит
-    .reveal-on на <html> — иначе при выключенном или упавшем JS
-    страница осталась бы пустой.
+    Скрытое состояние задаётся через :not(.is-visible), а видимое —
+    это просто отсутствие правила. Так «показать» никогда не спорит
+    со «спрятать»: две конкурирующие декларации opacity на одном
+    элементе не встречаются вовсе.
+
+    Обратный порядок (спрятать по умолчанию, показать более
+    специфичным селектором) здесь не работает — правило видимости
+    проигрывает внутри слоёв Tailwind, даже будучи специфичнее.
   */
   html.reveal-on .reveal {
-    opacity: 0;
-    transform: translateY(18px);
     transition:
-      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
+      opacity var(--dur-reveal) var(--ease-out),
+      transform var(--dur-reveal) var(--ease-out),
+      filter var(--dur-reveal) var(--ease-out);
   }
 
-  html.reveal-on .reveal.is-visible {
-    opacity: 1;
-    transform: none;
+  html.reveal-on .reveal:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(var(--reveal-y, 26px));
+    filter: blur(7px);
+  }
+
+  /* Каскад для прямых детей */
+  html.reveal-on .stagger > * {
+    transition:
+      opacity 0.62s var(--ease-out),
+      transform 0.62s var(--ease-out),
+      filter 0.62s var(--ease-out);
+  }
+
+  /* Ребёнок скрыт, пока не показан его собственный каскад
+     ИЛИ пока не показана секция, внутри которой он лежит. */
+  html.reveal-on .stagger:not(.is-visible) > *,
+  html.reveal-on .reveal:not(.is-visible) .stagger > * {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(5px);
+  }
+
+  /* Шаг каскада 90 мс — как у arlo.sh (0.12s между карточками,
+     0.14s между аватарами). Дальше 12-го элемента задержку не растим,
+     иначе конец длинного списка ждёт слишком долго. */
+  html.reveal-on .stagger > *:nth-child(1) { transition-delay: 0ms }
+  html.reveal-on .stagger > *:nth-child(2) { transition-delay: 90ms }
+  html.reveal-on .stagger > *:nth-child(3) { transition-delay: 180ms }
+  html.reveal-on .stagger > *:nth-child(4) { transition-delay: 270ms }
+  html.reveal-on .stagger > *:nth-child(5) { transition-delay: 360ms }
+  html.reveal-on .stagger > *:nth-child(6) { transition-delay: 450ms }
+  html.reveal-on .stagger > *:nth-child(7) { transition-delay: 520ms }
+  html.reveal-on .stagger > *:nth-child(8) { transition-delay: 580ms }
+  html.reveal-on .stagger > *:nth-child(9) { transition-delay: 630ms }
+  html.reveal-on .stagger > *:nth-child(10) { transition-delay: 670ms }
+  html.reveal-on .stagger > *:nth-child(n + 11) { transition-delay: 700ms }
+
+  /* Более короткий каскад для плотных списков */
+  html.reveal-on .stagger-tight > *:nth-child(1) { transition-delay: 0ms }
+  html.reveal-on .stagger-tight > *:nth-child(2) { transition-delay: 50ms }
+  html.reveal-on .stagger-tight > *:nth-child(3) { transition-delay: 100ms }
+  html.reveal-on .stagger-tight > *:nth-child(4) { transition-delay: 150ms }
+  html.reveal-on .stagger-tight > *:nth-child(5) { transition-delay: 195ms }
+  html.reveal-on .stagger-tight > *:nth-child(6) { transition-delay: 235ms }
+  html.reveal-on .stagger-tight > *:nth-child(7) { transition-delay: 270ms }
+  html.reveal-on .stagger-tight > *:nth-child(n + 8) { transition-delay: 300ms }
+}
+
+/* Мягкое «дыхание» декоративного свечения (arlo.sh: hs-float / hs-breathe).
+   Только для декора — текст не двигаем никогда. */
+@keyframes ambient-breathe {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.08);
+    opacity: 0.52;
   }
 }
 
+.ambient {
+  animation: ambient-breathe 9s var(--ease-out) infinite;
+}
+
+/* ------------------------------------------------------------------
+   Уважение к системной настройке «меньше движения».
+   Отключаем перемещение и размытие, оставляем контент на месте.
+   ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  html.reveal-on .reveal {
+  /* Нейтрализуем ровно те же селекторы, что прячут элементы,
+     — той же специфичностью, но ниже по документу. */
+  html.reveal-on .reveal:not(.is-visible),
+  html.reveal-on .stagger:not(.is-visible) > *,
+  html.reveal-on .reveal:not(.is-visible) .stagger > * {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
 
-  .btn:hover {
+  .ambient {
+    animation: none;
+  }
+
+  .btn:hover,
+  .card-hover:hover {
     transform: none;
   }
 }

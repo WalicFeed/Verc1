@@ -4,6 +4,7 @@ import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
 import Footer from "../components/Footer.astro";
 import CtaButton from "../components/CtaButton.astro";
+import SectionHead from "../components/SectionHead.astro";
 import LegalModal from "../components/LegalModal.tsx";
 
 import {
@@ -31,82 +32,72 @@ import {
     <Hero />
 
     <!-- ─────────────── Вводный абзац ─────────────── -->
-    <section class="section">
+    <section class="section reveal">
       <div class="wrap-narrow">
-        {
-          intro.body.map((p) => (
-            <p class="lede reveal">{p}</p>
-          ))
-        }
+        {intro.body.map((p) => <p class="lede">{p}</p>)}
       </div>
     </section>
 
     <hr class="rule wrap" />
 
     <!-- ─────────────── Вопрос ─────────────── -->
-    <section class="section">
+    <section class="section reveal">
       <div class="wrap">
-        <p class="eyebrow reveal">{question.eyebrow}</p>
+        <p class="eyebrow">{question.eyebrow}</p>
 
         <blockquote
-          class="display display-lg reveal mt-5 max-w-4xl border-l-2 border-accent pl-6"
+          class="display display-lg mt-5 max-w-4xl border-l-2 border-accent pl-6"
         >
           {question.quote}
         </blockquote>
 
-        <div class="mt-10 grid gap-x-14 gap-y-4 lg:grid-cols-2">
-          {
-            question.body.map((p, i) => (
-              <p class="reveal text-ink/80" style={`transition-delay: ${i * 40}ms`}>
-                {p}
-              </p>
-            ))
-          }
+        <div class="stagger mt-10 grid gap-x-14 gap-y-4 lg:grid-cols-2">
+          {question.body.map((p) => <p class="text-ink/80">{p}</p>)}
         </div>
 
-        <ul class="reveal mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line-soft bg-line-soft md:grid-cols-2 lg:grid-cols-3">
+        <!--
+          Напряжения оформлены не карточками, а списком с акцентными
+          линейками: рядом уже есть две сетки карточек, третья
+          превратила бы страницу в однородную плитку.
+        -->
+        <ul class="stagger stagger-tight mt-12 grid gap-x-12 gap-y-5 md:grid-cols-2">
           {
             question.tensions.map((t) => (
-              <li class="bg-cream-lt px-6 py-6 text-[0.95rem] leading-relaxed">
+              <li class="border-l-2 border-accent/45 pl-5 text-[0.97rem] leading-relaxed text-ink/85">
                 {t}
               </li>
             ))
           }
         </ul>
 
-        <p class="display display-md reveal mt-12 max-w-3xl">
-          {question.closing}
-        </p>
+        <p class="display display-md mt-12 max-w-3xl">{question.closing}</p>
       </div>
     </section>
 
     <!-- ─────────────── Подход: вся спираль ─────────────── -->
-    <section id="approach" class="section scroll-mt-20">
+    <section id="approach" class="section reveal scroll-mt-20">
       <div class="wrap">
-        <p class="eyebrow reveal">{wholeSpiral.eyebrow}</p>
+        <SectionHead
+          eyebrow={wholeSpiral.eyebrow}
+          title={wholeSpiral.title}
+          em={wholeSpiral.titleEm}
+          emBlock
+          class="max-w-3xl"
+        />
 
-        <h2 class="display display-lg reveal mt-5 max-w-3xl">
-          {wholeSpiral.title}
-          <span class="block text-accent">{wholeSpiral.titleAccent}</span>
-        </h2>
-
-        <div class="mt-9 grid gap-x-14 gap-y-4 lg:grid-cols-2">
-          {
-            wholeSpiral.body.map((p) => (
-              <p class="reveal text-ink/80">{p}</p>
-            ))
-          }
+        <div class="stagger mt-9 grid gap-x-14 gap-y-4 lg:grid-cols-2">
+          {wholeSpiral.body.map((p) => <p class="text-ink/80">{p}</p>)}
         </div>
 
-        <p class="reveal mt-12 max-w-2xl font-medium text-ink-strong">
+        <p class="mt-12 max-w-2xl font-medium text-ink-strong">
           {wholeSpiral.leadIn}
         </p>
 
-        <ol class="reveal mt-6 max-w-3xl space-y-0 border-t border-line-soft">
+        <ol class="stagger stagger-tight mt-6 max-w-3xl border-t border-line-soft">
           {
             wholeSpiral.questions.map((q, i) => (
-              <li class="flex gap-5 border-b border-line-soft py-4">
-                <span class="mt-0.5 shrink-0 font-mono text-xs text-muted">
+              <li class="flex items-baseline gap-5 border-b border-line-soft py-4">
+                <span class="numeral shrink-0 text-[1.15rem]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span class="text-[1.02rem] leading-relaxed">{q}</span>
@@ -115,22 +106,25 @@ import {
           }
         </ol>
 
-        <p class="display display-md reveal mt-10">{wholeSpiral.closing}</p>
+        <p class="display display-md mt-10">{wholeSpiral.closing}</p>
       </div>
     </section>
 
     <!-- ─────────────── Что участник увезёт ─────────────── -->
-    <section class="section">
+    <section class="section reveal">
       <div class="wrap">
-        <p class="eyebrow reveal">{takeaways.eyebrow}</p>
-        <h2 class="display display-lg reveal mt-5">{takeaways.title}</h2>
+        <SectionHead
+          eyebrow={takeaways.eyebrow}
+          title={takeaways.title}
+          em={takeaways.titleEm}
+        />
 
-        <div class="mt-12 space-y-5">
+        <div class="stagger mt-12 space-y-5">
           {
             takeaways.items.map((item, i) => (
-              <article class="card reveal p-7 sm:p-10">
+              <article class="card card-hover p-7 sm:p-10">
                 <div class="flex items-baseline gap-4">
-                  <span class="font-mono text-xs text-muted">
+                  <span class="numeral text-[1.35rem]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 class="display display-md">{item.title}</h3>
@@ -163,20 +157,21 @@ import {
     </section>
 
     <!-- ─────────────── Программа ─────────────── -->
-    <section id="program" class="section scroll-mt-20">
+    <section id="program" class="section reveal scroll-mt-20">
       <div class="wrap">
-        <p class="eyebrow reveal">{program.eyebrow}</p>
-        <h2 class="display display-lg reveal mt-5">{program.title}</h2>
+        <SectionHead
+          eyebrow={program.eyebrow}
+          title={program.title}
+          em={program.titleEm}
+        />
 
-        <div class="mt-12 grid gap-5 lg:grid-cols-2">
+        <div class="stagger mt-12 grid gap-5 lg:grid-cols-2">
           {
             program.days.map((day) => (
-              <article class="card reveal flex flex-col p-7 sm:p-9">
-                <div class="flex items-center gap-3">
-                  <span class="inline-flex items-center rounded-[var(--radius-pill)] bg-accent px-3 py-1 text-xs font-semibold tracking-wide text-ink-strong">
-                    {day.date}
-                  </span>
-                </div>
+              <article class="card card-hover flex flex-col p-7 sm:p-9">
+                <span class="inline-flex w-fit items-center rounded-[var(--radius-pill)] bg-accent px-3 py-1 text-xs font-semibold tracking-wide text-ink-strong">
+                  {day.date}
+                </span>
 
                 <h3 class="display display-md mt-5">{day.title}</h3>
                 <p class="mt-3 text-ink/80">{day.intro}</p>
@@ -206,17 +201,23 @@ import {
     </section>
 
     <!-- ─────────────── Результат ─────────────── -->
-    <section class="section">
+    <section class="section reveal">
       <div class="wrap">
-        <p class="eyebrow reveal">{outcomes.eyebrow}</p>
-        <h2 class="display display-lg reveal mt-5">{outcomes.title}</h2>
-        <p class="lede reveal mt-5 max-w-2xl">{outcomes.lede}</p>
+        <SectionHead
+          eyebrow={outcomes.eyebrow}
+          title={outcomes.title}
+          em={outcomes.titleEm}
+          sub={outcomes.lede}
+        />
 
-        <div class="reveal mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line-soft bg-line-soft md:grid-cols-2 lg:grid-cols-3">
+        <div class="stagger mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line-soft bg-line-soft md:grid-cols-2 lg:grid-cols-3">
           {
-            outcomes.items.map((item) => (
+            outcomes.items.map((item, i) => (
               <div class="flex flex-col bg-cream-lt px-6 py-7">
-                <h3 class="display display-sm">{item.title}</h3>
+                <span class="numeral text-[0.95rem] opacity-70">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 class="display display-sm mt-3">{item.title}</h3>
                 <p class="mt-3 text-[0.93rem] leading-relaxed text-ink/75">
                   {item.body}
                 </p>
@@ -228,15 +229,18 @@ import {
     </section>
 
     <!-- ─────────────── Для кого ─────────────── -->
-    <section class="section">
+    <section class="section reveal">
       <div class="wrap">
-        <p class="eyebrow reveal">{audience.eyebrow}</p>
-        <h2 class="display display-lg reveal mt-5">{audience.title}</h2>
+        <SectionHead
+          eyebrow={audience.eyebrow}
+          title={audience.title}
+          em={audience.titleEm}
+        />
 
-        <ul class="mt-10 max-w-4xl border-t border-line-soft">
+        <ul class="stagger stagger-tight mt-10 max-w-4xl border-t border-line-soft">
           {
             audience.items.map((item) => (
-              <li class="reveal flex gap-5 border-b border-line-soft py-5">
+              <li class="flex gap-5 border-b border-line-soft py-5">
                 <span
                   aria-hidden="true"
                   class="mt-[0.6em] h-[6px] w-[6px] shrink-0 rounded-full bg-accent"
@@ -247,81 +251,83 @@ import {
           }
         </ul>
 
-        <p class="display display-md reveal mt-9 text-accent">{audience.closing}</p>
+        <p class="display display-md mt-9"><em>{audience.closing}</em></p>
       </div>
     </section>
 
     <!-- ─────────────── Почему очно ─────────────── -->
-    <section class="section">
+    <section class="section reveal">
       <div class="wrap-narrow">
-        <p class="eyebrow reveal">{offline.eyebrow}</p>
-        <h2 class="display display-lg reveal mt-5">{offline.title}</h2>
+        <SectionHead
+          eyebrow={offline.eyebrow}
+          title={offline.title}
+          em={offline.titleEm}
+        />
 
-        <div class="mt-8 space-y-4">
-          {
-            offline.body.map((p) => (
-              <p class="reveal text-ink/80">{p}</p>
-            ))
-          }
+        <div class="stagger mt-8 space-y-4">
+          {offline.body.map((p) => <p class="text-ink/80">{p}</p>)}
         </div>
       </div>
     </section>
 
-    <!-- ─────────────── Ведущий ─────────────── -->
-    <section id="host" class="section scroll-mt-20">
-      <div class="wrap">
-        <div class="card reveal overflow-hidden">
-          <div class="grid lg:grid-cols-[1fr_1.35fr]">
-            <!-- Левая колонка: имя и цифры -->
-            <div class="border-b border-line-soft p-8 sm:p-10 lg:border-r lg:border-b-0">
-              <p class="eyebrow">{host.eyebrow}</p>
-              <h2 class="display display-lg mt-4">{host.name}</h2>
+    <!--
+      ─────────────── Ведущий ───────────────
+      Единственная инверсная секция на странице. Она разбивает
+      длинную кремовую ленту и делает раздел о человеке смысловым
+      центром — к нему возвращается взгляд при беглом просмотре.
+    -->
+    <section id="host" class="on-dark reveal scroll-mt-20">
+      <div class="wrap py-[clamp(3.5rem,7vw,5.5rem)]">
+        <div class="grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:gap-16">
+          <div>
+            <p class="eyebrow">{host.eyebrow}</p>
+            <h2 class="display display-lg mt-4">{host.name}</h2>
 
-              <!--
-                TODO: сюда фотография Анатолия.
-                Положите файл в public/ и раскомментируйте:
-                <img src="/anatoly.jpg" alt={host.name} class="mt-7 w-full rounded-[var(--radius-card)] object-cover" />
-              -->
+            <!--
+              TODO: фотография Анатолия.
+              Положите файл в public/ и раскомментируйте:
+              <img src="/anatoly.jpg" alt={host.name} class="mt-8 w-full rounded-[var(--radius-card)] object-cover" />
+            -->
 
-              <dl class="mt-8 grid grid-cols-2 gap-6">
-                {
-                  host.stats.map((stat) => (
-                    <div>
-                      <dt class="display text-[2.25rem] leading-none text-accent">
-                        {stat.value}
-                      </dt>
-                      <dd class="mt-2 text-[0.85rem] leading-snug text-muted">
-                        {stat.label}
-                      </dd>
-                    </div>
-                  ))
-                }
-              </dl>
-            </div>
+            <dl class="stagger mt-9 grid grid-cols-2 gap-6">
+              {
+                host.stats.map((stat) => (
+                  <div>
+                    <dt class="display text-[2.5rem] leading-none text-accent">
+                      {stat.value}
+                    </dt>
+                    <dd class="mt-2 text-[0.85rem] leading-snug text-cream-lt/50">
+                      {stat.label}
+                    </dd>
+                  </div>
+                ))
+              }
+            </dl>
+          </div>
 
-            <!-- Правая колонка: регалии и текст -->
-            <div class="p-8 sm:p-10">
-              <ul class="space-y-3">
-                {
-                  host.credentials.map((c) => (
-                    <li class="relative pl-5 text-[0.95rem] leading-relaxed text-ink/80">
-                      <span
-                        aria-hidden="true"
-                        class="absolute left-0 top-[0.68em] h-[5px] w-[5px] rounded-full bg-accent"
-                      />
-                      {c}
-                    </li>
-                  ))
-                }
-              </ul>
+          <div>
+            <ul class="stagger stagger-tight space-y-3">
+              {
+                host.credentials.map((c) => (
+                  <li class="relative pl-5 text-[0.95rem] leading-relaxed">
+                    <span
+                      aria-hidden="true"
+                      class="absolute left-0 top-[0.68em] h-[5px] w-[5px] rounded-full bg-accent"
+                    />
+                    {c}
+                  </li>
+                ))
+              }
+            </ul>
 
-              <div class="mt-7 space-y-3.5 border-t border-line-soft pt-7">
-                {
-                  host.body.map((p) => (
-                    <p class="text-[0.95rem] leading-relaxed text-ink/75">{p}</p>
-                  ))
-                }
-              </div>
+            <div
+              class="mt-8 space-y-3.5 border-t border-cream-lt/12 pt-7 text-cream-lt/60"
+            >
+              {
+                host.body.map((p) => (
+                  <p class="text-[0.95rem] leading-relaxed">{p}</p>
+                ))
+              }
             </div>
           </div>
         </div>
@@ -329,36 +335,32 @@ import {
     </section>
 
     <!-- ─────────────── Не сертификация ─────────────── -->
-    <section class="section">
+    <section class="section reveal">
       <div class="wrap-narrow">
-        <p class="eyebrow reveal">{certification.eyebrow}</p>
+        <SectionHead
+          eyebrow={certification.eyebrow}
+          title={certification.title}
+          em={certification.titleEm}
+          emBlock
+        />
 
-        <h2 class="display display-lg reveal mt-5">
-          {certification.title}
-          <span class="block text-muted">{certification.subtitle}</span>
-        </h2>
-
-        <div class="mt-8 space-y-4">
-          {
-            certification.body.map((p) => (
-              <p class="reveal text-ink/80">{p}</p>
-            ))
-          }
+        <div class="stagger mt-8 space-y-4">
+          {certification.body.map((p) => <p class="text-ink/80">{p}</p>)}
         </div>
 
-        <div class="card reveal mt-8 border-accent/40 p-6 sm:p-7">
+        <div class="card mt-8 border-accent/40 bg-accent/10 p-6 sm:p-7">
           <p class="display display-sm">{certification.highlight}</p>
           <p class="mt-3 text-[0.95rem] leading-relaxed text-ink/80">
             {certification.afterHighlight}
           </p>
         </div>
 
-        <p class="reveal mt-8 font-medium text-ink-strong">{certification.outro}</p>
+        <p class="mt-8 font-medium text-ink-strong">{certification.outro}</p>
 
-        <ul class="mt-5 space-y-2.5">
+        <ul class="stagger stagger-tight mt-5 space-y-2.5">
           {
             certification.paths.map((p) => (
-              <li class="reveal relative pl-5 text-[0.97rem] leading-relaxed text-ink/80">
+              <li class="relative pl-5 text-[0.97rem] leading-relaxed text-ink/80">
                 <span
                   aria-hidden="true"
                   class="absolute left-0 top-[0.68em] h-[5px] w-[5px] rounded-full bg-accent"
@@ -372,12 +374,16 @@ import {
     </section>
 
     <!-- ─────────────── Контекст: два блока в Мармарисе ─────────────── -->
-    <section class="section">
+    <section class="section reveal">
       <div class="wrap">
-        <p class="eyebrow reveal">{context.eyebrow}</p>
-        <h2 class="display display-lg reveal mt-5 max-w-3xl">{context.title}</h2>
+        <SectionHead
+          eyebrow={context.eyebrow}
+          title={context.title}
+          em={context.titleEm}
+          class="max-w-3xl"
+        />
 
-        <div class="reveal mt-10 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line-soft bg-line-soft sm:grid-cols-2">
+        <div class="stagger mt-10 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line-soft bg-line-soft sm:grid-cols-2">
           {
             context.timeline.map((item) => (
               <div
@@ -394,31 +400,30 @@ import {
           }
         </div>
 
-        <div class="mt-10 grid gap-x-14 gap-y-4 lg:grid-cols-2">
-          {
-            context.body.map((p) => (
-              <p class="reveal text-ink/80">{p}</p>
-            ))
-          }
+        <div class="stagger mt-10 grid gap-x-14 gap-y-4 lg:grid-cols-2">
+          {context.body.map((p) => <p class="text-ink/80">{p}</p>)}
         </div>
 
-        <p class="reveal mt-10 font-medium text-ink-strong">{context.leadIn}</p>
+        <p class="mt-10 font-medium text-ink-strong">{context.leadIn}</p>
 
         <blockquote
-          class="display display-md reveal mt-5 max-w-3xl border-l-2 border-accent pl-6"
+          class="display display-md mt-5 max-w-3xl border-l-2 border-accent pl-6"
         >
-          {context.quote}
+          <em>{context.quote}</em>
         </blockquote>
       </div>
     </section>
 
     <!-- ─────────────── Участие и цены ─────────────── -->
-    <section id="pricing" class="section scroll-mt-20">
+    <section id="pricing" class="section reveal scroll-mt-20">
       <div class="wrap">
-        <p class="eyebrow reveal">{pricing.eyebrow}</p>
-        <h2 class="display display-lg reveal mt-5">{pricing.title}</h2>
+        <SectionHead
+          eyebrow={pricing.eyebrow}
+          title={pricing.title}
+          em={pricing.titleEm}
+        />
 
-        <dl class="reveal mt-7 flex flex-wrap gap-x-10 gap-y-3">
+        <dl class="mt-7 flex flex-wrap gap-x-10 gap-y-3">
           {
             pricing.details.map((d) => (
               <div class="flex items-baseline gap-2.5">
@@ -429,12 +434,12 @@ import {
           }
         </dl>
 
-        <div class="mt-11 grid gap-5 lg:grid-cols-2">
+        <div class="stagger mt-11 grid gap-5 lg:grid-cols-2">
           {
             pricing.plans.map((plan) => (
               <article
                 class:list={[
-                  "card reveal flex flex-col p-8 sm:p-9",
+                  "card card-hover flex flex-col p-8 sm:p-9",
                   plan.featured && "border-accent/50 ring-1 ring-accent/25",
                 ]}
               >
@@ -461,7 +466,7 @@ import {
                         viewBox="0 0 14 14"
                         fill="none"
                         aria-hidden="true"
-                        class="mt-[0.35em] shrink-0 text-accent"
+                        class="mt-[0.35em] shrink-0 text-accent-deep"
                       >
                         <path
                           d="M2 7.5L5.5 11L12 3.5"
@@ -489,9 +494,7 @@ import {
           }
         </div>
 
-        <p
-          class="reveal mt-8 max-w-2xl text-[0.95rem] leading-relaxed text-ink/75"
-        >
+        <p class="mt-8 max-w-2xl text-[0.95rem] leading-relaxed text-ink/75">
           {pricing.limit}
         </p>
       </div>
@@ -501,18 +504,19 @@ import {
     <section class="relative overflow-hidden py-[clamp(4.5rem,10vw,8.25rem)]">
       <div
         aria-hidden="true"
-        class="pointer-events-none absolute bottom-[-14rem] left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full opacity-35 blur-[110px]"
+        class="ambient pointer-events-none absolute bottom-[-14rem] left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full blur-[110px]"
         style="background: radial-gradient(circle, var(--color-accent) 0%, transparent 68%)"
       >
       </div>
 
-      <div class="wrap relative text-center">
-        <h2 class="display display-lg reveal mx-auto max-w-3xl">
+      <div class="wrap reveal relative text-center">
+        <h2 class="display display-lg mx-auto max-w-3xl">
           {closing.title}
+          <em class="block">{closing.titleEm}</em>
         </h2>
-        <p class="reveal mt-5 text-ink/75">{closing.body}</p>
+        <p class="mt-5 text-ink/75">{closing.body}</p>
 
-        <div class="reveal mt-9 flex justify-center">
+        <div class="mt-9 flex justify-center">
           <CtaButton widget="booking" label={closing.cta} />
         </div>
       </div>

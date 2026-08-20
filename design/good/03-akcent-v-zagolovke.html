@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Хорошо · Акцент в заголовке</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;1,500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body { background:#f4ece2; color:#191614; font:16px/1.7 Inter, sans-serif; margin:0 }
+  .wrap { max-width:46rem; margin:0 auto; padding:2rem 1.5rem 4rem }
+  h1 { font:500 2rem/1.1 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem }
+  .note { background:#f0f6f2; border-left:3px solid #4a8f6a; padding:1rem 1.25rem; margin:1.5rem 0; font-size:.9rem }
+  .demo { border-top:1px solid rgba(33,33,31,.1); padding:2rem 0 }
+  .h2 { font:500 clamp(1.8rem,4vw,2.8rem)/1.05 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem; color:#0a0909 }
+  .h2 em { font-style:italic; font-weight:500 }  /* тот же шрифт, тот же кегль, тот же вес */
+  .sub { color:#191614aa; font-size:.95rem; max-width:38ch }
+  .cta { display:inline-block; background:#0a0909; color:#faf7f0; border-radius:999px;
+         padding:.75rem 1.5rem; font-size:.875rem; font-weight:500; text-decoration:none; margin-top:.5rem }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✓ Как надо</h1>
+
+  <div class="note">
+    <strong>Приём: смена начертания вместо смены цвета</strong><br>
+    Выделяемая часть набирается <em>курсивом того же шрифта</em> — тот же кегль,
+    тот же вес, тот же цвет. Меняется только рисунок букв.
+    <ol style="margin:.5rem 0 0; padding-left:1.1rem">
+      <li><b>Акцент читается, но не кричит.</b> Курсив у антиквы заметно
+          отличается от прямого начертания — это не наклонённая копия,
+          а другой рисунок, часто с рукописными формами.</li>
+      <li><b>Цвет остаётся свободным.</b> Раз заголовки его не тратят,
+          акцентным цветом можно пометить единственное, что вправду важно, —
+          кнопку и цену. Внизу видно, как это работает.</li>
+      <li><b>Приём не надоедает.</b> Курсив может повторяться на каждом
+          заголовке страницы и не превращается в узор.</li>
+      <li><b>Контраст не страдает</b> — цвет текста не меняется вовсе.</li>
+    </ol>
+    Приём подсмотрен у arlo.sh: <code>The &lt;em&gt;company brain.&lt;/em&gt;</code>
+  </div>
+
+  <div class="demo">
+    <p class="h2">Что останется <em>после встречи</em></p>
+    <p class="sub">Материалы, к которым можно возвращаться.</p>
+  </div>
+  <div class="demo">
+    <p class="h2">Два дня <em>работы</em></p>
+    <p class="sub">Программа встречи.</p>
+  </div>
+  <div class="demo">
+    <p class="h2">Для кого <em>эти два дня</em></p>
+    <p class="sub">Третий заголовок подряд — приём не приедается.</p>
+  </div>
+  <div class="demo">
+    <p class="h2">Мармарис · <em>1 и 2 сентября</em></p>
+    <p class="sub">А вот теперь акцентный цвет свободен — и работает там,
+       где от него есть польза:</p>
+    <p style="font:500 2.5rem/1 Cormorant,serif; color:#0a0909; margin:1rem 0 .25rem">90 000 ₽</p>
+    <a class="cta" href="#">Забронировать участие</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Хорошо · Появление при прокрутке</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body { background:#f4ece2; color:#191614; font:16px/1.7 Inter, sans-serif; margin:0 }
+  .wrap { max-width:44rem; margin:0 auto; padding:2rem 1.5rem 60vh }
+  h1 { font:500 2rem/1.1 Cormorant, serif; letter-spacing:-.04em; margin:0 0 .5rem }
+  .note { background:#f0f6f2; border-left:3px solid #4a8f6a; padding:1rem 1.25rem; margin:1.5rem 0; font-size:.9rem }
+  .card { background:#faf7f0; border:1px solid rgba(33,33,31,.08); border-radius:14px; padding:1.5rem; margin-bottom:1rem }
+  .card h3 { font:500 1.3rem/1.2 Cormorant, serif; margin:0 0 .5rem }
+  .card p { margin:0; font-size:.93rem; color:#191614bb }
+
+  /* ✓ ХОРОШО — механика снята с arlo.sh */
+  .group { --ease: cubic-bezier(0.22, 1, 0.36, 1) }
+
+  .group .card {
+    transition: opacity .68s var(--ease),
+                transform .68s var(--ease),
+                filter .68s var(--ease);
+  }
+
+  /* Скрытое состояние — через :not(). Тогда «показать» это просто
+     отсутствие правила, и два конкурирующих opacity не встречаются. */
+  .group:not(.is-visible) .card {
+    opacity: 0;
+    transform: translateY(26px);   /* умеренная амплитуда */
+    filter: blur(7px);             /* ← ключевая деталь */
+  }
+
+  /* Каскад с затухающим шагом */
+  .group .card:nth-child(1) { transition-delay: 0ms }
+  .group .card:nth-child(2) { transition-delay: 90ms }
+  .group .card:nth-child(3) { transition-delay: 165ms }
+
+  @media (prefers-reduced-motion: reduce) {
+    .group:not(.is-visible) .card { opacity:1; transform:none; filter:none; transition:none }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✓ Как надо</h1>
+  <p>Прокрутите страницу вниз.</p>
+
+  <div class="note">
+    <strong>Что изменилось</strong>
+    <ol style="margin:.5rem 0 0; padding-left:1.1rem">
+      <li><b>Размытие <code>blur(7px) → 0</code>.</b> Элемент словно наводится
+          на резкость. Именно это читается как «выплывает», а не «едет».</li>
+      <li><b>Амплитуда 26px.</b> Достаточно, чтобы заметить направление,
+          мало, чтобы отвлечь.</li>
+      <li><b><code>cubic-bezier(0.22, 1, 0.36, 1)</code>.</b> Быстрый старт
+          и мягкое торможение — так двигаются физические объекты.</li>
+      <li><b>Группа целиком.</b> Наблюдатель висит на контейнере, карточки
+          догоняют каскадом. Секция приезжает как единое целое.</li>
+      <li><b>Уважение к <code>prefers-reduced-motion</code>.</b></li>
+    </ol>
+  </div>
+
+  <div class="group">
+    <div class="card"><h3>Первая карточка</h3><p>Плавно наводится на резкость.</p></div>
+    <div class="card"><h3>Вторая карточка</h3><p>Догоняет через 90 мс.</p></div>
+    <div class="card"><h3>Третья карточка</h3><p>Шаг сокращается — конец группы не заставляет ждать.</p></div>
+  </div>
+</div>
+
+<script>
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target) }
+  }), { threshold:.15 });
+  document.querySelectorAll('.group').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

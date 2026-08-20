@@ -75,7 +75,10 @@ const widgets = Object.values(getcourse.widgets);
       // Класс .reveal-on уже проставлен инлайн-скриптом в <head>;
       // если его нет, значит анимация не нужна и здесь делать нечего.
       if (document.documentElement.classList.contains("reveal-on")) {
-        const items = document.querySelectorAll<HTMLElement>(".reveal");
+        // Наблюдаем секции (.reveal) и самостоятельные каскады (.stagger).
+        // Каскад внутри .reveal запускается родителем через CSS и своего
+        // наблюдателя не требует, но лишним он тоже не будет.
+        const items = document.querySelectorAll<HTMLElement>(".reveal, .stagger");
 
         const observer = new IntersectionObserver(
           (entries) => {
