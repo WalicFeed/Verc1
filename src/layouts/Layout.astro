@@ -1,0 +1,102 @@
+---
+import "../styles/global.css";
+import { getcourse } from "../config/integrations";
+
+interface Props {
+  title: string;
+  description: string;
+  url?: string;
+}
+
+const { title, description, url } = Astro.props;
+const widgets = Object.values(getcourse.widgets);
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="ru_RU" />
+    {url && <meta property="og:url" content={url} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Шрифты: Cormorant (заголовки) + Inter (текст), кириллица -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@300;400;500;600;700&display=swap"
+    />
+
+    <!--
+      Разрешаем анимацию появления только если её действительно есть чем
+      выполнить. Скрипт стоит в <head> и выполняется до первой отрисовки,
+      поэтому мигания видимого контента не будет. Если JS отключён или
+      упал — класс не появится и весь текст останется на месте.
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          if (
+            "IntersectionObserver" in window &&
+            !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ) {
+            document.documentElement.classList.add("reveal-on");
+          }
+        } catch (e) {
+          /* без анимации, но с видимым контентом */
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <slot />
+
+    <!-- Виджеты GetCourse (формы, попапы). Настраиваются в src/config/integrations.ts -->
+    {
+      getcourse.enabled &&
+        widgets.map((w) => <script id={w.scriptId} src={w.src} is:inline defer />)
+    }
+
+    <script>
+      // Появление секций при прокрутке — аналог .hs-reveal с arlo.sh.
+      // Класс .reveal-on уже проставлен инлайн-скриптом в <head>;
+      // если его нет, значит анимация не нужна и здесь делать нечего.
+      if (document.documentElement.classList.contains("reveal-on")) {
+        const items = document.querySelectorAll<HTMLElement>(".reveal");
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            });
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.06 },
+        );
+
+        items.forEach((el) => observer.observe(el));
+
+        // Страховка: если по какой-то причине наблюдатель не отработал
+        // (например, элемент отрисован за пределами вьюпорта нулевой высоты),
+        // через 2 секунды показываем всё безусловно.
+        window.setTimeout(() => {
+          items.forEach((el) => el.classList.add("is-visible"));
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>

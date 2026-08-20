@@ -1,0 +1,239 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens
+   Палитра и шрифты сняты со spiraldynamics.pro,
+   пропорции/формы элементов — с arlo.sh
+   ------------------------------------------------------------------ */
+@theme {
+  /* — Цвета (spiraldynamics.pro) — */
+  --color-cream: #f4ece2; /* основной фон страницы */
+  --color-cream-lt: #faf7f0; /* фон карточек (оттенок arlo.sh) */
+  --color-ink: #191614; /* основной текст */
+  --color-ink-strong: #0a0909; /* заголовки */
+  --color-accent: #ffac66; /* акцент — персиково-оранжевый */
+  --color-teal: #369faf; /* второй акцент */
+  --color-muted: #a59a8f; /* приглушённый текст */
+  --color-line: rgba(33, 33, 31, 0.14); /* границы (arlo.sh) */
+  --color-line-soft: rgba(33, 33, 31, 0.08);
+
+  /* — Шрифты — */
+  --font-display: "Cormorant", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* — Ритм секций (arlo.sh: 76px / 132px) — */
+  --spacing-section: 76px;
+  --spacing-closing: 132px;
+
+  /* — Скругления (arlo.sh) — */
+  --radius-card: 14px;
+  --radius-pill: 999px;
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.75;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink-strong);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink-strong);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Типографика
+   Cormorant 500 с плотным трекингом (-0.04em) — как на spiraldynamics
+   ------------------------------------------------------------------ */
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--color-ink-strong);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  /* Крупный герой */
+  .display-xl {
+    font-size: clamp(2.75rem, 9vw, 7.25rem);
+  }
+
+  /* Заголовок секции */
+  .display-lg {
+    font-size: clamp(2rem, 5.5vw, 3.75rem);
+    line-height: 1.05;
+  }
+
+  /* Подзаголовок внутри секции */
+  .display-md {
+    font-size: clamp(1.5rem, 3.4vw, 2.35rem);
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+  }
+
+  .display-sm {
+    font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  /* Надзаголовок-метка (Inter, разрядка) */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .lede {
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+    line-height: 1.65;
+    color: var(--color-ink);
+  }
+
+  /* ---------------- Кнопки (форма — arlo.sh) ---------------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-pill);
+    padding: 0.8rem 1.6rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.005em;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      transform 0.18s ease,
+      background-color 0.18s ease,
+      color 0.18s ease,
+      border-color 0.18s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  .btn-primary {
+    background-color: var(--color-ink-strong);
+    color: var(--color-cream-lt);
+    border: 1px solid var(--color-ink-strong);
+  }
+
+  .btn-primary:hover {
+    background-color: #2b2320;
+    border-color: #2b2320;
+  }
+
+  .btn-ghost {
+    background-color: rgba(255, 255, 255, 0.55);
+    color: var(--color-ink-strong);
+    border: 1px solid var(--color-line);
+  }
+
+  .btn-ghost:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* ---------------- Карточки ---------------- */
+  .card {
+    background-color: var(--color-cream-lt);
+    border: 1px solid var(--color-line-soft);
+    border-radius: var(--radius-card);
+  }
+
+  /* Обёртка-контейнер */
+  .wrap {
+    width: 100%;
+    max-width: 68rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .wrap-narrow {
+    width: 100%;
+    max-width: 46rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .section {
+    padding-block: clamp(3.25rem, 7vw, var(--spacing-section));
+  }
+
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--color-line-soft);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Scroll reveal (аналог .hs-reveal с arlo.sh) — на IntersectionObserver
+   ------------------------------------------------------------------ */
+@layer utilities {
+  /*
+    Прогрессивное улучшение: по умолчанию контент виден.
+    Прятать элементы разрешено только после того, как скрипт повесит
+    .reveal-on на <html> — иначе при выключенном или упавшем JS
+    страница осталась бы пустой.
+  */
+  html.reveal-on .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  html.reveal-on .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  html.reveal-on .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,59 @@
+---
+import { hero } from "../data/content";
+import CtaButton from "./CtaButton.astro";
+---
+
+<section id="top" class="relative overflow-hidden pt-14 pb-16 sm:pt-20 sm:pb-24">
+  <!-- Мягкое свечение акцентом — приём с arlo.sh -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-40 left-1/2 h-[38rem] w-[38rem] -translate-x-1/2 rounded-full opacity-40 blur-[110px]"
+    style="background: radial-gradient(circle, var(--color-accent) 0%, transparent 68%)"
+  >
+  </div>
+
+  <div class="wrap relative">
+    <p class="eyebrow reveal">{hero.eyebrow}</p>
+
+    <h1 class="display display-xl reveal mt-5" style="transition-delay: 60ms">
+      {hero.title}
+    </h1>
+
+    <p
+      class="display display-md reveal mt-4 text-accent"
+      style="transition-delay: 120ms"
+    >
+      {hero.tagline}
+    </p>
+
+    <div class="reveal mt-8 max-w-2xl" style="transition-delay: 180ms">
+      <p class="lede">{hero.lede}</p>
+      <p class="mt-3 text-ink/75">{hero.body}</p>
+    </div>
+
+    <div
+      class="reveal mt-9 flex flex-wrap items-center gap-3"
+      style="transition-delay: 240ms"
+    >
+      <CtaButton widget="booking" label={hero.ctaPrimary} />
+      <a href="#program" class="btn btn-ghost">{hero.ctaSecondary}</a>
+    </div>
+
+    <!-- Фактическая сводка -->
+    <dl
+      class="reveal mt-14 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line-soft bg-line-soft sm:grid-cols-3"
+      style="transition-delay: 300ms"
+    >
+      {
+        hero.facts.map((fact) => (
+          <div class="bg-cream-lt px-5 py-5">
+            <dt class="eyebrow">{fact.label}</dt>
+            <dd class="mt-1.5 text-[1.05rem] font-medium text-ink-strong">
+              {fact.value}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

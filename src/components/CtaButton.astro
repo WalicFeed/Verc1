@@ -1,0 +1,38 @@
+---
+import { getcourse, fallbackHref } from "../config/integrations";
+
+interface Props {
+  /** Ключ виджета из config/integrations.ts (например "booking") */
+  widget?: string;
+  variant?: "primary" | "ghost";
+  class?: string;
+  label: string;
+}
+
+const { widget, variant = "primary", class: className = "", label } = Astro.props;
+
+const config = widget ? getcourse.widgets[widget] : undefined;
+const useWidget = getcourse.enabled && config;
+
+// Пока виджет не подключён — обычная ссылка на почту, страница остаётся рабочей.
+const classes = [
+  "btn",
+  variant === "primary" ? "btn-primary" : "btn-ghost",
+  useWidget && config?.triggerClass ? config.triggerClass : "",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+{
+  useWidget ? (
+    <button type="button" class={classes} data-widget={widget}>
+      {label}
+    </button>
+  ) : (
+    <a href={fallbackHref} class={classes} data-widget={widget}>
+      {label}
+    </a>
+  )
+}
